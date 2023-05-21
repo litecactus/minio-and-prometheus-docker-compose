@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  minio:
+    image: quay.io/minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+     - /mnt/disk1:/data1
+     - /mnt/disk2:/data2
+     - /mnt/disk3:/data3
+     - /mnt/disk4:/data4
+    environment:
+      MINIO_ROOT_USER: rootuser
+      MINIO_ROOT_PASSWORD: supersecret
+      MINIO_SERVER_URL: https://my.domain.com # API port
+      MINIO_BROWSER_REDIRECT_URL: https://my.domain.com # Web browser GUI port
+      MINIO_PROMETHEUS_URL: http://url:port
+      MINIO_PROMETHEUS_JOB_ID: minio-job
+    command: server --console-address ":9001" /data{1...4}
+    restart: unless-stopped
+
+  prom:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prom-info:/etc/prometheus
+      - prom-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+
+volumes:
+  prom-data:
