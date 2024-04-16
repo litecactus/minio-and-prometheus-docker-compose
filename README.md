@@ -1,16 +1,23 @@
 # minio docker compose 
 
-A docker compose yaml file to build a MINIO single node multiple disk setup.
+A docker compose yaml file to build a MINIO single node multiple disk server.
 
+Run these commands on your server to setup the file system and label on each disk. Bear in mind your device's may be different so try an ```lsblk``` to get the correct devices.
 ``` yaml
-$ mkfs.xfs /dev/sda -L DISK1
-$ mkfs.xfs /dev/sdb -L DISK2
-$ mkfs.xfs /dev/sdc -L DISK3
-$ mkfs.xfs /dev/sdd -L DISK4
+mkfs.xfs /dev/sda -L DISK1
+mkfs.xfs /dev/sdb -L DISK2
+mkfs.xfs /dev/sdc -L DISK3
+mkfs.xfs /dev/sdd -L DISK4
+```
 
-$ nano /etc/fstab
+Edit the fstab file with this command.
+```
+nano /etc/fstab
+```
 
-  # <file system>  <mount point>  <type>  <options>         <dump>  <pass>
+Make sure your fstab file looks like this (with your own devices i.e. /dev/sdc etc).
+```
+# <file system>  <mount point>  <type>  <options>         <dump>  <pass>
 /dev/sda      /mnt/disk1     xfs     defaults,noatime  0       2
 /dec/sdb      /mnt/disk2     xfs     defaults,noatime  0       2
 /dev/sdc      /mnt/disk3     xfs     defaults,noatime  0       2
@@ -23,3 +30,4 @@ $ nano /etc/fstab
 3. Mount disks and add to ```fstab``` as above
 4. ```cd minio-docker```
 5. ```docker compose up -d```
+6. Navigate to your URL as specified in the docker-compose.yml file.
