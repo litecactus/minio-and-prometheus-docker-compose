@@ -1,6 +1,6 @@
-# minio docker compose 
+# minio and promethus docker compose example for your Homelab
 
-A docker compose yaml file to build a MINIO single node multiple disk server.
+A docker compose to build a MINIO single node, multiple disk server. MINIO will operate with erasure coding with just four disks, but feel free to apply more disks and more servers. I think four servers with eight disks is a great spot. However, in a homelab environment, one server and four disks is more realistic!
 
 Run these commands on your server to setup the file system and label on each disk. Bear in mind your device's may be different so try an ```lsblk``` to get the correct devices.
 ``` yaml
