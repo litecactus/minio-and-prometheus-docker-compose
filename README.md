@@ -29,5 +29,6 @@ Make sure your fstab file looks like this (with your own devices i.e. /dev/sdc e
 2. ```git clone https://github.com/litecactus/minio-docker.git```
 3. Mount disks and add to ```fstab``` as above
 4. ```cd minio-docker```
-5. ```docker compose up -d```
-6. Navigate to your URL as specified in the docker-compose.yml file.
+5. ```nano docker-compose.yml``` to edit the domain and ports as desired
+6. ```docker compose up -d```
+7. Navigate to your URL as specified in the docker-compose.yml file.
